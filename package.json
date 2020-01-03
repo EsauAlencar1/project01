@@ -1,0 +1,8 @@
+{
+  "name": "projeto01",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:EsauAlencar1/project01.git",
+  "author": "Esau Alencar <esauaencar@gmail.com>",
+  "license": "MIT"
+}

@@ -7,3 +7,4 @@ export default {
 // 2º parametro colocar um String que só eu terei acesso
 // acessar md5online.org - gobarberesau
 // 3º parametro é a data de expiração
+// usado em SessionController.js - token

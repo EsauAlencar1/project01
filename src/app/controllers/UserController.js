@@ -33,6 +33,12 @@ class UserController {
       provider,
     });
   }
+
+  // metodo update para fazer alteração dos dados cadastrados
+  async update(req, res) {
+    console.log(req.userId); // buscar usuário e fazer o update na base de dados
+    return res.json({ ok: true });
+  }
 }
 
 export default new UserController();

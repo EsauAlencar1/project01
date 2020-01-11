@@ -36,8 +36,36 @@ class UserController {
 
   // metodo update para fazer alteração dos dados cadastrados
   async update(req, res) {
-    console.log(req.userId); // buscar usuário e fazer o update na base de dados
-    return res.json({ ok: true });
+    // console.log(req.userId); // buscar usuário e fazer o update na base de dados
+    const { email, oldPassword } = req.body;
+
+    // buscar o usuário pelo id - primary key
+    const user = await User.findByPk(req.userId);
+
+    // verificação se quiser alterar o e-mail
+    // email informado !== do email cadastrado
+    if (email !== user.email) {
+      const userExists = await User.findOne({ where: { email } });
+      if (userExists) {
+        return res.status(400).json({ error: 'User already exists.' });
+      }
+    }
+
+    // se informar o oldPassword e ele for diferente
+    if (oldPassword && !(await user.checkPassword(oldPassword))) {
+      return res.status(401).json({ error: 'Password doest not match' });
+    }
+
+    // se tudo deu certo
+    // atualizar os dados do usuário que estão em req.body
+    const { id, name, provider } = await user.update(req.body);
+
+    return res.json({
+      id,
+      name,
+      email,
+      provider,
+    });
   }
 }
 

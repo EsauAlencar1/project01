@@ -28,8 +28,9 @@ export default async (req, res, next) => {
   try {
     // promisify retorna outra função com o resto dos parametros
     // se não conseguir decifrar o decoded ele cai no catch
+    // decoded é o valor retornado do jwt.verify
     const decoded = await promisify(jwt.verify)(token, authConfig.secret);
-    console.log(decoded);
+    // console.log(decoded); // token e o hash do auth.js do config
 
     // incluir o id do usuário dentro do req -
     req.userId = decoded.id;

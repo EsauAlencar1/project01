@@ -2,6 +2,8 @@
 
 import jwt from 'jsonwebtoken'; // importação de modulo vem sempre primeiro
 
+import * as Yup from 'yup';
+
 import User from '../models/User';
 
 import authConfig from '../../config/auth';
@@ -9,6 +11,19 @@ import authConfig from '../../config/auth';
 // informações que precisam ser passadas para validação
 class SessionController {
   async store(req, res) {
+    // validação do yup
+    const schema = Yup.object().shape({
+      // name: Yup.string().required(),
+      email: Yup.string()
+        .email()
+        .required(),
+      password: Yup.string().required(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation fails' });
+    }
+
     // email e senha que recebo no corpo da requisição
     const { email, password } = req.body;
     // findOne procura apenas 1 - verificar se existe 1 email

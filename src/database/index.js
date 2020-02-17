@@ -1,12 +1,12 @@
 // responsável pela conexão com o banco
-
 import Sequelize from 'sequelize';
 
 import User from '../app/models/User';
+import File from '../app/models/File';
 
 import databaseConfig from '../config/database'; // importar as configurações do banco de dados
 
-const models = [User]; // array com os models
+const models = [User, File]; // array com os models
 
 class Database {
   constructor() {
@@ -20,7 +20,9 @@ class Database {
     // para percorrer os models
     // cada model, retorna de cada model um model
     // se referindo ao que está na const Models
-    models.map(model => model.init(this.connection));
+    models
+      .map(model => model.init(this.connection))
+      .map(model => model.associate && model.associate(this.connection.models));
   }
 }
 

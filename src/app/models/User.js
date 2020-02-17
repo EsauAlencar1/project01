@@ -26,6 +26,12 @@ class User extends Model {
     return this;
   }
 
+  // uma Id de file sendo armazenado em models de usuário
+  // esse models de usuário percentece a um models de File
+  static associate(models) {
+    this.belongsTo(models.File, { foreignKey: 'avatar_id' }); // belongsTo pertence á
+  } // nome da coluna da tabela de usuarios que irá armazenar a referência para o arquivo
+
   // método para verificar a senha está ok
   // recebe senha, retorna o método compare para comparar a senha que está tentando
   // logar com a senha criptografada no banco

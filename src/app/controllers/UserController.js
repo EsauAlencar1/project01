@@ -65,10 +65,13 @@ class UserController {
       oldPassword: Yup.string().min(6),
       password: Yup.string()
         .min(6) // when = validação condicional"Quando" - do yup//
-        .when('oldPassword', (oldPassword, field) =>
-          // 1º parametro oldPassoword, 2º continuação
-          // se old for preenchida ? seja required : se não retorna o field normal
-          oldPassword ? field.required() : field
+        .when(
+          'oldPassword',
+          (oldPassword, field) =>
+            // 1º parametro oldPassoword, 2º continuação
+            // se old for preenchida ? seja required : se não retorna o field normal
+            oldPassword ? field.required() : field
+          // se oldPassword for preenchido ? quero que o field/(password) seja required : se n retorna o field
         ),
       // quando o password estiver preenchido,
       confirmPassword: Yup.string().when('password', (password, field) =>
